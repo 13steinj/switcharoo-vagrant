@@ -1,9 +1,14 @@
-dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+#!/usr/bin/env bash
 
-while IFS= read -d $'\0' -r file ; do 
-  echo "INFO-CMD: cd ${file} && npm link"
-  ( cd ${file} && npm link ) &
-done < <(find ${dir}/../src -mindepth 1 -maxdepth 1 -type d -print0)
+base_path=/vagrant/src/switcharoo
+
+# This loads nvm
+export NVM_DIR="/home/vagrant/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+for plugin in ${@} ; do
+  ( cd ${base_path} && npm link ${base_path}/../${plugin} ) &
+done
 
 wait
 

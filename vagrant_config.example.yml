@@ -1,0 +1,46 @@
+# Specify which vagrant box to use.
+# VBox
+:box: "ubuntu/trusty64"
+
+# Other providers; use at your own risk
+# only Virtualbox tested right now
+# KVM
+#:box: "KVM/precise64"
+#:box_url: "https://vagrant-kvm-boxes.s3.amazonaws.com/precise64-kvm.box"
+#VMWare
+#:box: "spantree/ubuntu-precise-64"
+
+# Assign a private IP to your box.
+:private_ip: "192.168.150.2"
+# Force DHCP instead of static ip
+:dhcp: false
+# Give it a unique hostname(use a . to make cookies work)
+:hostname: switcharoo-vagrant
+
+# Expose the VM's port 80 on a specified port. May be set to false to disable.
+# :forward_port: 4444
+
+# npm dependencies that you want to npm link locally
+# paths are relative to src/
+# npm knows what package it is from the package.json of
+# the module
+:local: [
+  "snoode",
+  "switcharoo-plugin-ads",
+  "switcharoo-plugin-metrics",
+  "switcharoo-plugin-core",
+  "react-mutator"
+]
+
+# This the node/iojs engine pulled in to power the proejct.
+# This is pulled in via nvm so any string here should match
+# an engine that nvm can find. Generally v#.#.# will be a 
+# node engine and iojs-v#.#.# will be an iojs engine.
+:engine: "iojs-v1.2.0"
+
+# How much cpu and memory to use
+:cpu: 4 #Cores
+:memory: 4096 #MB
+
+#Use NFS for shared folder mounts(increases performance with virtualbox)
+:nfs: true

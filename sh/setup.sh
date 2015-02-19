@@ -26,9 +26,12 @@ do
   ( 
     git clone git@github.com:${org}/${i}.git ${dir}/${srcpath}/${i} && 
     cd ${dir}/${srcpath}/${i} && 
-    npm install && 
-    cd ${dir}/${srcpath}/${baserepo} && 
-    npm link ${dir}/${srcpath}/${i} 
+    npm install
+    # comment the line above and uncomment the three below
+    # to set up reddit-mobile locally instead of with Vagrant
+    # npm install && 
+    # cd ${dir}/${srcpath}/${baserepo} && 
+    # npm link ${dir}/${srcpath}/${i} 
   ) &
 done
 
