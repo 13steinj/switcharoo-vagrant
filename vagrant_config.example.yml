@@ -1,14 +1,15 @@
 # Specify which vagrant box to use.
-# VBox
+# Virtualbox
 :box: "ubuntu/trusty64"
 
 # Other providers; use at your own risk
 # only Virtualbox tested right now
 # KVM
-#:box: "KVM/precise64"
-#:box_url: "https://vagrant-kvm-boxes.s3.amazonaws.com/precise64-kvm.box"
+#:box: "KVM/trusty64"
+#:box_url: "https://vagrant-kvm-boxes.s3.amazonaws.com/trusty64_kvm.box"
 #VMWare
-#:box: "spantree/ubuntu-precise-64"
+#:box: "VMWareFusion/trusty64"
+#:box_url: "https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vmwarefusion.box"
 
 # Assign a private IP to your box.
 :private_ip: "192.168.150.2"
@@ -20,17 +21,34 @@
 # Expose the VM's port 80 on a specified port. May be set to false to disable.
 # :forward_port: 4444
 
-# npm dependencies that you want to npm link locally
-# paths are relative to src/
-# npm knows what package it is from the package.json of
-# the module
-:local: [
-  "snoode",
-  "switcharoo-plugin-ads",
-  "switcharoo-plugin-metrics",
-  "switcharoo-plugin-core",
-  "react-mutator"
-]
+# npm dependencies you want to link locally
+# The key is the path to the repo relative to :path_to_base.
+# It also accepts absolute paths in terms of the guest machine.
+# The value is the Github {org/person}/{repo name} that will
+# be cloned if the path doesn't exist in the guest repo.
+# It will be cloned where the path of the key is.
+# Use `false` as the value if you want it to simply use the
+# npm installed version if the path doesn't exist.
+:local: {
+  "src/snoode": "reddit/snoode",
+  "src/switcharoo-plugin-ads": "reddit/switcharoo-plugin-ads",
+  "src/switcharoo-plugin-metrics": "reddit/switcharoo-plugin-metrics",
+  "src/switcharoo-plugin-core": "reddit/switcharoo-plugin-core",
+  "src/react-mutator": "reddit/react-mutator",
+}
+
+# Where switcharoo will be in the guest machine
+# If that doesn't exist, it will clone it from GitHub to the
+# specified path.
+:path_to_base: "src/switcharoo"
+
+# if path_to_base does not exist, this repo from GitHub will
+# be cloned at the specified location in GitHub
+:base_github_repo: "reddit/switcharoo"
+
+# Additional directories to sync with Vagrant. 
+# The path will be /host-raw/src/${key} in the guest machine
+:synced_dirs: {}
 
 # This the node/iojs engine pulled in to power the proejct.
 # This is pulled in via nvm so any string here should match

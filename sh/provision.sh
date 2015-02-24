@@ -10,7 +10,6 @@ SWITCHAROO_LOCAL_PATHS=$1
 SWITCHAROO_LOCAL_REPOS=$2
 SWITCHAROO_HOSTNAME=$3
 SWITCHAROO_ENGINE=$4
-# SWITCHAROO_BASE_SRC_PATH=$5
 SWITCHAROO_BASE_GITHUB_REPO=$6
 
 IFS=' ' read -a local_paths <<< "$SWITCHAROO_LOCAL_PATHS"
@@ -22,30 +21,30 @@ then
   exit 1
 fi
 
-# # Change the hostname so we can easily identify what environment we're on:
-# echo ${SWITCHAROO_HOSTNAME} > /etc/hostname
+# Change the hostname so we can easily identify what environment we're on:
+echo ${SWITCHAROO_HOSTNAME} > /etc/hostname
 
-# # Update /etc/hosts to match new hostname to avoid "Unable to resolve hostname" issue:
-# echo "127.0.0.1 ${SWITCHAROO_HOSTNAME}" >> /etc/hosts
+# Update /etc/hosts to match new hostname to avoid "Unable to resolve hostname" issue:
+echo "127.0.0.1 ${SWITCHAROO_HOSTNAME}" >> /etc/hosts
 
-# # Use hostname command so that the new hostname takes effect immediately without a restart:
-# hostname ${SWITCHAROO_HOSTNAME}
+# Use hostname command so that the new hostname takes effect immediately without a restart:
+hostname ${SWITCHAROO_HOSTNAME}
 
-# # Install core components
-# sudo -u root bash /vagrant/sh/core.sh
+# Install core components
+sudo -u root bash /vagrant/sh/core.sh
 
-# # Install engine
-# sudo su - vagrant /vagrant/sh/engine.sh ${SWITCHAROO_ENGINE}
+# Install engine
+sudo su - vagrant /vagrant/sh/engine.sh ${SWITCHAROO_ENGINE}
 
-# # Ensure existance or go get all the necessary repos
-# sudo su - vagrant /vagrant/sh/setup.sh "${SWITCHAROO_BASE_SRC_PATH}" "${SWITCHAROO_BASE_GITHUB_REPO}" &
-# for i in "${!local_paths[@]}"; do 
-#   sudo su - vagrant /vagrant/sh/setup.sh "${local_paths[$i]}" "${local_repos[$i]}" &
-# done
+# Ensure existance or go get all the necessary repos
+sudo su - vagrant /vagrant/sh/setup.sh "${SWITCHAROO_BASE_SRC_PATH}" "${SWITCHAROO_BASE_GITHUB_REPO}" &
+for i in "${!local_paths[@]}"; do 
+  sudo su - vagrant /vagrant/sh/setup.sh "${local_paths[$i]}" "${local_repos[$i]}" &
+done
 
-# wait
+wait
 
-# echo "Finished setup.sh. Starting npm_link.sh."
+echo "Finished setup.sh. Starting npm_link.sh."
 
 # Do some fun sym linking
 for i in "${!local_paths[@]}"; do 

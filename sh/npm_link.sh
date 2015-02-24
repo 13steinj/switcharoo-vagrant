@@ -16,11 +16,3 @@ export NVM_DIR="/home/vagrant/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 echo "BASE ${base_path} - LOCAL ${link_path}" 
 ( cd ${base_path} && npm link ${link_path} )
-
-# if [[ "$plugin" = /* ]]; then
-#   echo "Plugging absolute ${plugin}"
-#   ( cd ${base_path} && npm link ${plugin} ) &
-# else
-#   echo "Plugging relative ${plugin}"
-#   ( cd ${base_path} && npm link ${base_path}/${plugin} ) &
-# fi
