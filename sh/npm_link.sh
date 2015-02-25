@@ -1,10 +1,18 @@
-dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+#!/usr/bin/env bash
 
-while IFS= read -d $'\0' -r file ; do 
-  echo "INFO-CMD: cd ${file} && npm link"
-  ( cd ${file} && npm link ) &
-done < <(find ${dir}/../src -mindepth 1 -maxdepth 1 -type d -print0)
+base_path=$1
 
-wait
+if [[ "$2" = false ]]; then
+  echo "Skipping.";
+  exit 0;
+elif [[ "$2" = /* ]]; then
+  link_path=${2}
+else
+  link_path=/vagrant/${2}
+fi
 
-echo "npm linked all src files"
+# This loads nvm
+export NVM_DIR="/home/vagrant/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+echo "BASE ${base_path} - LOCAL ${link_path}" 
+( cd ${base_path} && npm link ${link_path} )
