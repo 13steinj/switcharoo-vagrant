@@ -1,0 +1,64 @@
+# Specify which vagrant box to use.
+# Virtualbox
+:box: "ubuntu/trusty64"
+
+# Other providers; use at your own risk
+# only Virtualbox tested right now
+# KVM
+#:box: "KVM/trusty64"
+#:box_url: "https://vagrant-kvm-boxes.s3.amazonaws.com/trusty64_kvm.box"
+#VMWare
+#:box: "VMWareFusion/trusty64"
+#:box_url: "https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vmwarefusion.box"
+
+# Assign a private IP to your box.
+:private_ip: "192.168.150.2"
+# Force DHCP instead of static ip
+:dhcp: false
+# Give it a unique hostname(use a . to make cookies work)
+:hostname: switcharoo-vagrant
+
+# Expose the VM's port 80 on a specified port. May be set to false to disable.
+# :forward_port: 4444
+
+# npm dependencies you want to link locally
+# The key is the path to the repo relative to :path_to_base.
+# It also accepts absolute paths in terms of the guest machine.
+# The value is the Github {org/person}/{repo name} that will
+# be cloned if the path doesn't exist in the guest repo.
+# It will be cloned where the path of the key is.
+# Use `false` as the value if you want it to simply use the
+# npm installed version if the path doesn't exist.
+:local: {
+  "src/snoode": "reddit/snoode",
+  "src/switcharoo-plugin-ads": "reddit/switcharoo-plugin-ads",
+  "src/switcharoo-plugin-metrics": "reddit/switcharoo-plugin-metrics",
+  "src/switcharoo-plugin-core": "reddit/switcharoo-plugin-core",
+  "src/react-mutator": "reddit/react-mutator",
+}
+
+# Where switcharoo will be in the guest machine
+# If that doesn't exist, it will clone it from GitHub to the
+# specified path.
+:path_to_base: "src/switcharoo"
+
+# if path_to_base does not exist, this repo from GitHub will
+# be cloned at the specified location in GitHub
+:base_github_repo: "reddit/switcharoo"
+
+# Additional directories to sync with Vagrant. 
+# The path will be /host-raw/src/${key} in the guest machine
+:synced_dirs: {}
+
+# This the node/iojs engine pulled in to power the proejct.
+# This is pulled in via nvm so any string here should match
+# an engine that nvm can find. Generally v#.#.# will be a 
+# node engine and iojs-v#.#.# will be an iojs engine.
+:engine: "iojs-v1.2.0"
+
+# How much cpu and memory to use
+:cpu: 4 #Cores
+:memory: 4096 #MB
+
+#Use NFS for shared folder mounts(increases performance with virtualbox)
+:nfs: true
